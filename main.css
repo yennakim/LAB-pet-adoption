@@ -1,0 +1,10 @@
+#app {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: justify-content;
+}
+
+.card-footer::first-letter {
+  text-transform: capitalize;
+}
