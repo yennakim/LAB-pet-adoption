@@ -16,10 +16,6 @@
   margin: 20px 0 30px 0;
 }
 
-.card-footer::first-letter {
-  text-transform: capitalize;
-}
-
 .btnShowAll {
   background-color: #f8ead8;
   color: #65647c;
