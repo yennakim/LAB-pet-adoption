@@ -289,15 +289,15 @@ const cardsOnDom = (pets) => {
     <div class="card-body">
       <h5 class="card-title">${pet.color}</h5>
       <p class="card-text">${pet.specialSkill}</p>
+      <button class="btn btn-danger" id="delete--${pet.id}">Delete</button>
     </div>
-    <div class="card-footer">
-    ${pet.type}</div>
+    
   </div>`;
   }
   renderToDom("#app", domString);
 };
 
-// Filter
+// FILTER FUNCTION
 const filter = (pets, typeString) => {
   const typeArray = [];
 
@@ -309,6 +309,7 @@ const filter = (pets, typeString) => {
   return typeArray;
 };
 
+// CREATE
 const form = document.querySelector("form");
 
 const addPet = (e) => {
@@ -330,14 +331,39 @@ const addPet = (e) => {
 
 form.addEventListener("submit", addPet);
 
+// DELETE
+
+// Target the div id
+const app = document.querySelector("#app");
+
+// Add an event listener to capture clicks
+app.addEventListener("click", (e) => {
+  if (e.target.id.includes("delete")) {
+    // Check to see if the id includes "delete"
+    const [, id] = e.target.id.split("--"); // Split the array which will split into delete and the id; [, id] means to ignore the first index and use the second index. In this case, ignore "delete" and use the id on the other side of "--"
+    const index = pets.findIndex((e) => e.id === Number(id)); // Find the index that matches up with the id number; NOT THE "id" STRING
+
+    // console.log(e.target.id);   - Will print out delete--id of deleted pet
+
+    pets.splice(index, 1); // Remove the element
+
+    cardsOnDom(pets); // Grab all the cards that were not deleted
+  }
+});
+
+// FILTER BUTTONS //
+// Targeting the div id and passing it into a variable
 const showAllButton = document.querySelector("#show-btn");
 const showCatsButton = document.querySelector("#cats");
 const showDogsButton = document.querySelector("#dogs");
 const showDinosButton = document.querySelector("#dinos");
 
+// Target Show All Pets and once the button has been clicked, show all pets listed in pets array
 showAllButton.addEventListener("click", () => {
   cardsOnDom(pets);
 });
+
+// Target Show Cats and once the button has been clicked, call the filter function and loop through the pets filtering pet type: "cat"
 
 showCatsButton.addEventListener("click", () => {
   const catType = filter(pets, "cat");
